@@ -1,7 +1,7 @@
 # CircuitComponentRounding
 
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://KronosTheLate.github.io/CircuitComponentRounding.jl/stable)
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://KronosTheLate.github.io/CircuitComponentRounding.jl/dev)
+<!---[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://KronosTheLate.github.io/CircuitComponentRounding.jl/stable)--->
+<!---[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://KronosTheLate.github.io/CircuitComponentRounding.jl/dev)--->
 [![Build Status](https://github.com/KronosTheLate/CircuitComponentRounding.jl/workflows/CI/badge.svg)](https://github.com/KronosTheLate/CircuitComponentRounding.jl/actions)
 [![Coverage](https://codecov.io/gh/KronosTheLate/CircuitComponentRounding.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/KronosTheLate/CircuitComponentRounding.jl)
 
@@ -15,6 +15,16 @@ You use theory and math to calculate a set of components to be used in some circ
 If you are not sure which series is available to you, use the function `series_values(ser)`. This returns all the values in the given series `ser`. Look for a series that matches the values in your component-storage.
 
 # Examples
+Checking the values in the E3 series:
+```julia-repl
+julia> series_values(3)
+3-element Vector{Float64}:
+ 1.0
+ 2.2
+ 4.7
+```
+
+Basic usage:
 ```julia-repl
 julia> vals = [3, 7e-7, 14e-2]
 3-element Vector{Float64}:
@@ -27,13 +37,18 @@ julia> roundE(vals, 24)
  3.0
  6.8e-7
  0.15
+ ```
 
+Chainging adding the third positionional argument, determening format:
+```julia-repl
 julia> roundE(vals, 24, :ENG)
 3-element Vector{String}:
  "3.0×10⁰"
  "680×10⁻⁹"
  "150×10⁻³"
+```
 
+```julia-repl
 julia> roundE(vals, 24, :SI)
 3-element Vector{String}:
  "3.0"
