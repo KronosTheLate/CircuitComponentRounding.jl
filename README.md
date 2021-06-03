@@ -21,6 +21,11 @@ To remedy the situation, simply round your calculated values with the `roundE` f
 If you are not sure which series is available to you, use the function `series_values(ser)`. This returns all the values in the given series `ser`. Look for a series that matches the values in your component-storage.
 
 ## Examples
+Loading the package:
+```julia-repl
+Julia> using CircuitComponentRounding
+```
+
 Checking the values in the E3 series:
 ```julia-repl
 julia> series_values(3)
