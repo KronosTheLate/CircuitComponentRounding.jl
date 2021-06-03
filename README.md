@@ -57,8 +57,17 @@ julia> roundE(vals, 24, :SI)
  "680n"
  "150m"
 ```
-  
-  
-  
 
-As this is the first package of a relativly novice programmer, input on ways the package could be better are very welcome!
+# How the rounding is implemented
+The rounding function returns the value with the smallest percentage error in the given E-series.
+It does this by finding the [geometric mean](https://en.wikipedia.org/wiki/Geometric_mean) of the 
+two numbers in the given E-series ajecent to the given value (one smaller, one larger), and 
+returning the E-series value on the same side of the mean value as the input value.
+
+In other words, if the input value is larger than the geometric mean, the returned value was rounded up. 
+If the given input is smaller than the geometric mean, the output was rounded down. Rounding in this case 
+means taking the closes value in the E-series.
+  
+  
+# Feedback
+As this is the first package of a relativly novice programmer, feedback and input on ways the package could be better are very welcome!
