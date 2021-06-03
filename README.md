@@ -32,6 +32,7 @@ julia> vals = [3, 7e-7, 14e-2]
  7.0e-7
  0.14
 
+# The second argument is the specific E series to round to
 julia> roundE(vals, 24)
 3-element Vector{Float64}:
  3.0
@@ -39,7 +40,8 @@ julia> roundE(vals, 24)
  0.15
  ```
 
-Chainging adding the third positionional argument, determening format:
+Adding the third positionional argument allows 
+control of the output format:
 ```julia-repl
 julia> roundE(vals, 24, :ENG)
 3-element Vector{String}:
