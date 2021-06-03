@@ -22,19 +22,19 @@ julia> vals = [3, 7e-7, 14e-2]
  7.0e-7
  0.14
 
-julia> round_to_E_series(vals, 24)
+julia> roundE(vals, 24)
 3-element Vector{Float64}:
  3.0
  6.8e-7
  0.15
 
-julia> round_to_E_series(vals, 24, :ENG)
+julia> roundE(vals, 24, :ENG)
 3-element Vector{String}:
  "3.0×10⁰"
  "680×10⁻⁹"
  "150×10⁻³"
 
-julia> round_to_E_series(vals, 24, :SI)
+julia> roundE(vals, 24, :SI)
 3-element Vector{String}:
  "3.0"
  "680n"
