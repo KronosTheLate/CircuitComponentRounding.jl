@@ -1,6 +1,7 @@
 module CircuitComponentRounding
 
 export roundE
+export series_values
 
 using NumericIO: formatted
 
