@@ -60,6 +60,7 @@ function series_values(ser::Integer; popfinal=true)
     else
         error("Could not determine series")
     end
+    # the popfinal argument removes the final 10.0 in the series before returning the vector
     popfinal ? (return Eseries[begin:end-1]) : (return Eseries)
 end
 
