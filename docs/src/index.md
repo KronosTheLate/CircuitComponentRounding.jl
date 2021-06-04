@@ -70,8 +70,6 @@ search: series_values
    4.7
 ```
 
-Test
-
 ```@index
 ```
 
