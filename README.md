@@ -21,12 +21,12 @@ To remedy the situation, simply round your calculated values with the `roundE` f
 If you are not sure which series is available to you, use the function `series_values(series_number)`. This prints all the values in the given series `series_number` in the Julia REPL. Look for a series that matches the values in your component-storage.
 
 ## Examples
-Loading the package:
+Lets start with loading the package.
 ```julia-repl
 Julia> using CircuitComponentRounding
 ```
 
-Checking the values in the E3 series:
+Use the `series_values` function to see what values are in a given series.
 ```julia-repl
 julia> series_values(3)
  100
@@ -36,49 +36,53 @@ julia> series_values(3)
 
 Basic usage:
 ```julia-repl
-julia> vals = [3, 7e-7, 14e-2]
-3-element Vector{Float64}:
+julia> vals = [3, 7e-7, 14e-2, 17e7]
+4-element Vector{Float64}:
  3.0
  7.0e-7
  0.14
+ 1.7e8
 
 # The second argument is the specific E series to round to
 julia> roundE(vals, 24)
-3-element Vector{Float64}:
+4-element Vector{Float64}:
  3.0
  6.8e-7
  0.15
+ 1.8e8
  ```
 
 Adding the third positionional argument allows 
 control of the output format:
 ```julia-repl
 julia> roundE(vals, 24, :ENG)
-3-element Vector{String}:
+4-element Vector{String}:
  "3.0×10⁰"
  "680×10⁻⁹"
  "150×10⁻³"
+ "180×10⁶"
 ```
 
 ```julia-repl
 julia> roundE(vals, 24, :SI)
-3-element Vector{String}:
+4-element Vector{String}:
  "3.0"
  "680n"
  "150m"
+ "180M"
 ```
 
-Checking that all calculated values are in the E24 series, along with a value that is not. Note that factors of 10 are removed until the values range from 100 to 1000. This is because E-series repeat for every factor of 10, and is therefore only defined within one order of magnitude.
+As a final check, lets see that all calculated values are in the E24 series, along with a value that is not. Note that factors of 10 are manually removed or added until the values range from 100 to 1000. This is because E-series repeat for every factor of 10, and is therefore only defined within one order of magnitude.
 ```julia-repl
-# Staring with `@.` makes everything occur elementwise
-julia> @. [150, 300, 680, 681] in series_values(24, print_to_repl=false)
+# Staring a line with `@.` makes everything occur elementwise
+julia> @. [300, 680, 150, 151] in series_values(24, print_to_repl=false)
 4-element BitVector:
  1
  1
  1
  0
 ```
-`0` means false, and `1` means true.
+where `0` means false, and `1` means true.
 
 ## How the rounding is implemented
 The rounding function returns the value with the smallest percentage error in the given E-series.
