@@ -69,6 +69,16 @@ julia> roundE(vals, 24, :SI)
  "150m"
 ```
 
+Checking that all values are in the E24 series. Note that all factors of 10 are removed, as there is not a hard limit on how many order of magnitude (or factors of 10) that exist:
+```julia-repl
+# Staring with `@.` makes everything occur elementwise
+julia> @. [1.5, 3, 6.8] in series_values(24)
+3-element BitVector:
+ 1
+ 1
+ 1
+```
+
 ## How the rounding is implemented
 The rounding function returns the value with the smallest percentage error in the given E-series.
 It does this by finding the [geometric mean](https://en.wikipedia.org/wiki/Geometric_mean) of the 
