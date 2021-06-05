@@ -92,7 +92,7 @@ returning the E-series value on the same side of the mean value as the input val
 
 In other words, if the input value is larger than the geometric mean, the returned value was rounded up. 
 If the given input is smaller than the geometric mean, the output was rounded down. Rounding in this case 
-means taking the closes value in the E-series.
+means taking the first bigger/smaller value in the E-series.
   
   
 ## Feedback
