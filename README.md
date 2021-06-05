@@ -26,7 +26,7 @@ Lets start with loading the package.
 Julia> using CircuitComponentRounding
 ```
 
-Use the `series_values` function to see what values are in a given series.
+Use the `valuesE` function to see what values are in a given series.
 ```julia-repl
 julia> valuesE(3)
  100
