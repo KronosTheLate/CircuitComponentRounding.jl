@@ -1,7 +1,7 @@
 module CircuitComponentRounding
 
 export roundE
-export series_values
+export valuesE
 
 ## Seperate contents into a block for testing
 
@@ -29,8 +29,8 @@ function norm_to_between_1_and_10(val::Number)
 end
 
 """
-    series_values(series_number)
-    series_values(series_number; print_to_repl=true, hundred_to_thousand=true, popfinal=true)
+    valuesE(series_number)
+    valuesE(series_number; print_to_repl=true, hundred_to_thousand=true, popfinal=true)
 
 Returns the values in the E-series `series_number`. This function
 is intended for printing the series values for comparison with
@@ -46,14 +46,14 @@ even though this value is not part of the E-series.
 
 # Examples
 ```julia-repl
-julia> series_values(3)
+julia> valuesE(3)
 3-element Vector{Int64}:
  100
  220
  470
 ```
 """
-function series_values(series_number::Integer; print_to_repl=true, hundred_to_thousand=true, popfinal=true)
+function valuesE(series_number::Integer; print_to_repl=true, hundred_to_thousand=true, popfinal=true)
     @assert series_number ∈ [3, 6, 12, 24, 48, 96, 192] "The E-series provided is not valid. Please make the first argument one of the following: 3, 6, 12, 24, 48, 96, 192"
     if series_number == 3
         Eseries = [ 1.0,   2.2,   4.7,   10.0]
@@ -132,7 +132,7 @@ julia> roundE(vals, 24, :SI)
 function roundE(values_to_be_rounded::AbstractArray, series::Integer, format=:none)
     @assert minimum(values_to_be_rounded)≥0 "Only positive values can be rounded."
     rounded_vals = Number[]
-    E_series = series_values(series; print_to_repl=false, hundred_to_thousand=false, popfinal=false)
+    E_series = valuesE(series; print_to_repl=false, hundred_to_thousand=false, popfinal=false)
     for val in values_to_be_rounded
         value, power_of_10 = norm_to_between_1_and_10(val)
         candidate1, candidate2 = identify_series_candidates(value, E_series)

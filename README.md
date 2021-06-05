@@ -18,7 +18,7 @@ You use theory and math to calculate a set of components to be used in some circ
 To remedy the situation, simply round your calculated values with the `roundE` function. The returned values can be directly plugged into your simulation, and the output can be formatted to match the labels in the component-storage.
 
 ## But what series should I round to?
-If you are not sure which series is available to you, use the function `series_values(series_number)`. This prints all the values in the given series `series_number` in the Julia REPL. Look for a series that matches the values in your component-storage.
+If you are not sure which series is available to you, use the function `valuesE(series_number)`. This prints all the values in the given series `series_number` in the Julia REPL. Look for a series that matches the values seen in your component-storage.
 
 ## Examples
 Lets start with loading the package.
@@ -28,7 +28,7 @@ Julia> using CircuitComponentRounding
 
 Use the `series_values` function to see what values are in a given series.
 ```julia-repl
-julia> series_values(3)
+julia> valuesE(3)
  100
  220
  470
@@ -75,7 +75,7 @@ julia> roundE(vals, 24, :SI)
 As a final check, lets see that all calculated values are in the E24 series, along with a value that is not. Note that factors of 10 are manually removed or added until the values range from 100 to 1000. This is because E-series repeat for every factor of 10, and is therefore only defined within one order of magnitude.
 ```julia-repl
 # Staring a line with `@.` makes everything occur elementwise
-julia> @. [300, 680, 150, 151] in series_values(24, print_to_repl=false)
+julia> @. [300, 680, 150, 151] in valuesE(24, print_to_repl=false)
 4-element BitVector:
  1
  1
