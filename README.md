@@ -101,5 +101,5 @@ As this is the first package of a relativly novice programmer, feedback and inpu
 ### ToDo
 * Add support for rounding to other standards for electrical components
 * Add tests:
-** Round 1:10 and 100:1000, and see that they are in the series rounded to (for all series?)
-** Round a number of values, add a tiny number, and see that none are in the series rounded to
+    * Round 1:10 and 100:1000, and see that they are in the series rounded to (for all series?)
+    * Round a number of values, add a tiny number, and see that none are in the series rounded to
