@@ -40,7 +40,7 @@ set `print_to_repl=false`.
 The other keyword arguments are related to technical details in the
 package internals, but are explained below for completeness:
 
-If `hundred_to_thousand=false`, the values range from 1 to 10
+If `hundred_to_thousand=false`, the values range from 1 to 10.
 If `popfinal=false`, every series has 10 (or 1000) as its final value,
 even though this value is not part of the E-series.
 
