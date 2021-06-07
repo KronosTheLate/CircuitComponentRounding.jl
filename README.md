@@ -5,6 +5,8 @@
 [![Build Status](https://github.com/KronosTheLate/CircuitComponentRounding.jl/workflows/CI/badge.svg)](https://github.com/KronosTheLate/CircuitComponentRounding.jl/actions)
 [![Coverage](https://codecov.io/gh/KronosTheLate/CircuitComponentRounding.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/KronosTheLate/CircuitComponentRounding.jl)
 
+This package aims to implement ways to round a given value to a so-called 
+
 From [wikipedia](https://en.wikipedia.org/wiki/E_series_of_preferred_numbers):
 The E series is a system of preferred numbers (also called preferred values) derived for use in electronic components. It consists of the E3, E6, E12, E24, E48, E96 and E192 series, where the number after the 'E' designates the quantity of value "steps" in each series. Although it is theoretically possible to produce components of any value, in practice the need for inventory simplification has led the industry to settle on the E series for resistors, capacitors, inductors, and zener diodes. Other types of electrical components are either specified by the Renard series (for example fuses) or are defined in relevant product standards (for example IEC 60228 for wires).
 
@@ -84,6 +86,34 @@ julia> @. [300, 680, 150, 151] in valuesE(24, print_to_repl=false)
 ```
 where `0` means false, and `1` means true.
 
+## Docstrings
+This package aims to include elaborate docstrings for each function. If you forget how a functions works, can always check the docstring with `?function_name`.
+```julia-repl
+help?> valuesE
+
+    valuesE(series_number)
+    valuesE(series_number; print_to_repl=true, hundred_to_thousand=true, popfinal=true)
+
+  Returns the values in the E-series series_number. This function is intended for printing the series values for
+  comparison with available components. To get the values returned from the function as opposed to printed, set
+  print_to_repl=false.  
+  
+  The other keyword arguments are related to technical details in the package internals, but are explained below for
+  completeness:  
+  
+  If hundred_to_thousand=false, the values range from 1 to 10.  
+  If popfinal=false, every series has 10 (or 1000) as its final value, even though this value is not part of the E-series.
+
+  Examples
+  ≡≡≡≡≡≡≡≡≡≡
+
+  julia> valuesE(3)
+  3-element Vector{Int64}:
+   100
+   220
+   470
+```
+
 ## How the rounding is implemented
 The rounding function returns the value with the smallest percentage error in the given E-series.
 It does this by finding the [geometric mean](https://en.wikipedia.org/wiki/Geometric_mean) of the 
@@ -99,7 +129,7 @@ means taking the first bigger/smaller value in the E-series.
 As this is the first package of a relativly novice programmer, feedback and input on ways the package could be better are very welcome!
 
 ### ToDo
-* Add support for rounding to other standards for electrical components
+* Add support for rounding to other standards for electrical components.
 * Add tests:
     * Round 1:10 and 100:1000, and see that they are in the series rounded to (for all series?)
     * Round a number of values, add a tiny number, and see that none are in the series rounded to
