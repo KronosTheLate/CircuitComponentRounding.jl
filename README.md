@@ -132,3 +132,12 @@ As this is the first package of a relativly novice programmer, feedback and inpu
 * Add tests:
     * Round 1:10 and 100:1000, and see that they are in the series rounded to (for all series?)
     * Round a number of values, add a tiny number, and see that none are in the series rounded to
+* Change API, more Julian:
+    * Define new type ESeries with field "vals" as integers 100-1000
+    * Define `E3`, `E6`, etc as instances of ESeres
+    * Define method round(val::Number, ser::ESeries)
+    * Reccoment broadcasting
+    * Show method for ESeries with printed values
+    * E3.val to get values
+    * Add case for larger than larges value in series, instead of appending 1000
+    * 
