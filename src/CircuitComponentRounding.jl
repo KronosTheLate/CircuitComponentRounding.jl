@@ -1,7 +1,7 @@
 module CircuitComponentRounding
 
 using NumericIO: formatted
-import Base: round, print
+import Base: round, print, show
 
 export E3, E6, E12, E24, E48, E96, E192
 

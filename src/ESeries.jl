@@ -50,4 +50,14 @@ function print(series::ESeries)
     end
 end
 
+function show(io::IO, series::ESeries)
+    for i in 1:3:length(series.vals)
+        print(io, series.vals[i])
+        print(io, "  |  ")
+        print(io, series.vals[i+1])
+        print(io, "  |  ")
+        println(io, series.vals[i+2])
+    end
+end
+
 nothing
