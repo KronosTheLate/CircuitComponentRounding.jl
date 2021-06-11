@@ -8,7 +8,7 @@ function identify_series_candidates(a::Number, possible_values::Array)
     return possible_values[i], possible_values[j]
 end
 
-function norm_to_between_100_and_1000(val::Number)
+function norm_to_between_100_and_1000(val::Number; return_OOM=true)
     power_of_10 = 0.0
     while val > 1000
         val/=10; power_of_10 += 1
@@ -16,7 +16,11 @@ function norm_to_between_100_and_1000(val::Number)
     while val ≤ 100
         val*=10; power_of_10 += -1
     end
-    return val, power_of_10
+    if return_OOM
+        return val, power_of_10
+    else
+        return val
+    end
 end
 
 nothing

@@ -128,9 +128,11 @@ The function rounds to the values found in the [wikipedia list](https://en.wikip
 As this is the first package of a relativly novice programmer, feedback and input on ways the package could be better are very welcome!
 
 ### ToDo
-* Add support for rounding to other standards for electrical components.
+
+* Change API, more Julian:
+    * Create `determine_Eseries` function, taking in a varargs and outputting the name of all E_series it could be.
+    * Fix the documentation of reflect the changes
 * Add tests:
     * Round 1:10 and 100:1000, and see that they are in the series rounded to (for all series?)
     * Round a number of values, add a tiny number, and see that none are in the series rounded to
-* Change API, more Julian:
-    * Fix the documentation of reflect the changes
+* Add support for rounding to other standards for electrical components.
