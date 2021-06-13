@@ -1,7 +1,7 @@
 name = "CircuitComponentRounding"
 uuid = "e5143800-6ee0-4b40-b4db-1d4259db07c9"
 authors = ["KronosTheLate"]
-version = "0.3.0"
+version = "0.3.1"
 
 [deps]
 NumericIO = "6c575b1c-77cb-5640-a5dc-a54116c90507"
