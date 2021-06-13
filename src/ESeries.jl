@@ -34,7 +34,7 @@ end
 function round(series::ESeries, inputs::AbstractArray, format::Union{Symbol, Bool}=false)
     outputs = Any[]
     for i in eachindex(inputs)
-        push!(outputs, round(series, inputs[i]; format))
+        push!(outputs, round(series, inputs[i], format))
     end
     return outputs
 end
