@@ -5,10 +5,11 @@
 [![Build Status](https://github.com/KronosTheLate/CircuitComponentRounding.jl/workflows/CI/badge.svg)](https://github.com/KronosTheLate/CircuitComponentRounding.jl/actions)
 [![Coverage](https://codecov.io/gh/KronosTheLate/CircuitComponentRounding.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/KronosTheLate/CircuitComponentRounding.jl)
 
+## Introduction
 This package implements functions to round given values to the nearest standardized value for circuit components. The only set of standardized values currently implemented is the E-series. From [wikipedia](https://en.wikipedia.org/wiki/E_series_of_preferred_numbers):  
 "The E series is a system of preferred numbers (also called preferred values) derived for use in electronic components. It consists of the E3, E6, E12, E24, E48, E96 and E192 series, where the number after the 'E' designates the quantity of value "steps" in each series. Although it is theoretically possible to produce components of any value, in practice the need for inventory simplification has led the industry to settle on the E series for resistors, capacitors, inductors, and zener diodes."
 
-# The use case
+## The use case
 You use theory and math to calculate a set of components to be used in some circuit, e.g. a control system. But producers only manufacture components at certain values, which are unlikely to match your calculations. This creates two problems:
 1) Your calculated components are nowhere to be found among your real components. You then need to somehow figure out what is the best alternative.
 2) If you simulate the system with your calculated values, it will use different parameters than your physical system, because the calculated values are not physically available.
@@ -40,7 +41,7 @@ julia> round(E12, vals)
  1.8e8
  ```
 
-When having very large or very small values, some formatting would be nice. This is supplied by the `NumericIO` package. The format is set with the third and final positional argument, and reccomended formats are `:SI` or `:ENG`:
+When having very large or very small values, some formatting would be nice. This is supplied by the `NumericIO.jl` package. The format is set with the third and final positional argument. Reccomended formats are `:SI` or `:ENG`:
 ```julia-REPL
 julia> round(E12, vals, :SI)
 4-element Vector{Any}:
