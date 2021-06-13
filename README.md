@@ -13,125 +13,112 @@ You use theory and math to calculate a set of components to be used in some circ
 1) Your calculated components are nowhere to be found among your real components. You then need to somehow figure out what is the best alternative.
 2) If you simulate the system with your calculated values, it will use different parameters than your physical system, because the calculated values are not physically available.
 
-To remedy the situation, simply round your calculated values with the `roundE` function. The returned values can be directly plugged into your simulation, or the output can be formatted to match the labels in the component-storage.
-
-## But what series should I round to?
-If you are not sure which series is available to you, use the function `valuesE(series_number)`. This prints all the values in the given series `series_number` in the Julia REPL. Look for a series that matches the values seen in your component-storage. Beacause many values are unique to the specific series, you only need to find a few matches.
+To remedy the situation, simply round your calculated values to the nearest standardized ones. This is done with the `round` function from Jula base. The returned values can be directly plugged into your simulation, or the output can be formatted to better match common component labels.
 
 ## Examples
+
 Lets start with loading the package.
-```julia-repl
+```julia-REPL
 Julia> using CircuitComponentRounding
 ```
 
-Use the `valuesE` function to see what values are in a given series.
-```julia-repl
-julia> valuesE(3)
+And lets round a single value to the `E12` series:
+```julia-REPL
+julia> round(E12, 266)
+270.0
+```
+
+The input can be a vector of values:
+```julia-REPL
+julia> vals = [3, 7e-7, 14e-2, 17e7]
+
+julia> round(E12, vals)
+4-element Vector{Any}:
+ 3.3
+ 8.2e-7
+ 0.15
+ 1.8e8
+ ```
+
+When having very large or very small values, some formatting would be nice. This is supplied by the `NumericIO` package. The format is set with the third and final positional argument, and reccomended formats are `:SI` or `:ENG`:
+```julia-REPL
+julia> round(E12, vals, :SI)
+4-element Vector{Any}:
+ "3.30"
+ "820n"
+ "150m"
+ "180M"
+
+julia> round(E12, vals, :ENG)
+4-element Vector{Any}:
+ "3.30×10⁰"
+ "820×10⁻⁹"
+ "150×10⁻³"
+ "180×10⁶"
+```
+
+## The E-series variables
+This package defines all E-series as variables `E3`, `E6`, and so on, up to `E192`. To see the values in any series, you can:
+1) Evaluate the variable, e.g. `E6`, and the values will be shown in your default IO stream, which changes depending of where you are excecuting your code (VSCode, Pluto, the REPL etc).
+2) Call `print` on the variable, e.g. `print(E6)`, and the values will be printed in the REPL:
+```julia-REPL
+julia> print(E6)
+Values in E6:
+100   |   150   |   220
+330   |   470   |   680
+```
+
+You can also access the values directly as a vector, by calling the `vals` field of the E-series:
+```julia-REPL
+julia> E3.vals
+3-element Vector{Int64}:        
  100
  220
  470
 ```
 
-Let's now round some values! I will round to the E24 series, as it is the one available to me:
-```julia-repl
-julia> vals = [3, 7e-7, 14e-2, 17e7]
-4-element Vector{Float64}:
- 3.0
- 7.0e-7
- 0.14
- 1.7e8
+## But what series should I round to?
+To determine what series is available to you, you can do two thing:
+1) Manually check for matches between the available components and a list of E-series values. To see all values in a given series, see the paragraph above.
+2) Use the function `determine_E`.
 
-# The second argument is the specific E series to round to
-julia> roundE(vals, 24)
-4-element Vector{Float64}:
- 3.0
- 6.8e-7
- 0.15
- 1.8e8
- ```
-
-Adding the third positionional argument allows 
-control of the output format:
-```julia-repl
-julia> roundE(vals, 24, :ENG)
-4-element Vector{String}:
- "3.0×10⁰"
- "680×10⁻⁹"
- "150×10⁻³"
- "180×10⁶"
+Here is an example of how to use `determine_E`. Let's say that I can see a few component around, and I will use those to determine which E-series would contain them all:
+```julia-REPL
+julia> determine_E(220, 470, 680)
+3-element Vector{Symbol}:
+ :E6
+ :E12
+ :E24
 ```
 
-```julia-repl
-julia> roundE(vals, 24, :SI)
-4-element Vector{String}:
- "3.0"
- "680n"
- "150m"
- "180M"
+There are 3 series that contain all the values given. Let's add some more information, and see if we can narrow it down to one:
+```julia-REPL
+julia> determine_E(220, 470, 680, 910)
+1-element Vector{Symbol}:
+ :E24
 ```
 
-As a final check, let's check if all calculated values are in fact part of the E24 series, along with a value that is not. Note that factors of 10 are manually removed or added until the values range from 100 to 1000. This is because E-series repeat for every factor of 10, and is therefore only defined within one order of magnitude.
-```julia-repl
-# Staring a line with `@.` makes everything occur elementwise
-julia> @. [300, 680, 150, 151] in valuesE(24, print_to_repl=false)
-4-element BitVector:
- 1
- 1
- 1
- 0
-```
-where `0` means false, and `1` means true. Note that this final check is just for show, and should not be necessary during normal use.
+Great! Now the determined `E24` series can be used for future rounding.
 
-## Docstrings
-This package aims to include elaborate docstrings for each function. If you forget how a function works, you can always check the docstring with `?function_name`.
-```julia-repl
-julia> ?
-help?> valuesE
 
-    valuesE(series_number)
-    valuesE(series_number; print_to_repl=true, hundred_to_thousand=true, popfinal=true)
 
-  Returns the values in the E-series series_number. This function is intended for printing the series values for
-  comparison with available components. To get the values returned from the function as opposed to printed, set
-  print_to_repl=false.  
-  
-  The other keyword arguments are related to technical details in the package internals, but are explained below for
-  completeness:  
-  
-  If hundred_to_thousand=false, the values range from 1 to 10.  
-  If popfinal=false, every series has 10 (or 1000) as its final value, even though this value is not part of the E-series.
-
-  Examples
-  ≡≡≡≡≡≡≡≡≡≡
-
-  julia> valuesE(3)
-  3-element Vector{Int64}:
-   100
-   220
-   470
-```
 
 ## How the rounding is implemented
-The rounding function returns the value with the smallest percentage error in the given E-series.
-It does this by finding the [geometric mean](https://en.wikipedia.org/wiki/Geometric_mean) of the 
+The rounded value has the smallest percentage error possible. This is done by finding the [geometric mean](https://en.wikipedia.org/wiki/Geometric_mean) of the 
 two numbers in the given E-series ajecent to the given value (one smaller, one larger), and 
 returning the E-series value on the same side of the mean value as the input value.
 
 In other words, if the input value is larger than the geometric mean, the returned value was rounded up. 
-If the given input is smaller than the geometric mean, the output was rounded down. Rounding in this case 
-means taking the first bigger/smaller value in the E-series.
+If the given input is smaller than the geometric mean, the output was rounded down. Rounding in this case means taking the first bigger/smaller value in the E-series.
 
 ## Where do the values come from?
-The function rounds to the values found in the [wikipedia list](https://en.wikipedia.org/wiki/E_series_of_preferred_numbers#Lists) of E-series values. While this list ranges from 1 to 10, and those are the values used internally, the printed series values from the `valuesE` function are by default converted to range from 100 to 1000. The reasoning is that integers are faster and easier to read than floating point values.
+The values rounded to are found in the [wikipedia list](https://en.wikipedia.org/wiki/E_series_of_preferred_numbers#Lists) of E-series values. While this list ranges from 1 to 10, the values used are multiplied by 100 and converted to integers. The reasoning is that integers exact, in addition to being faster and easier to read than floating point values.
   
 ## Feedback
 As this is the first package of a relativly novice programmer, feedback and input on ways the package could be better are very welcome!
 
 ### ToDo
 
-* Change API, more Julian:
-    * Create `determine_Eseries` function, taking in a varargs and outputting the name of all E_series it could be.
-    * Fix the documentation of reflect the changes
 * Add tests:
     * Round 1:10 and 100:1000, and see that they are in the series rounded to (for all series?)
     * Round a number of values, add a tiny number, and see that none are in the series rounded to

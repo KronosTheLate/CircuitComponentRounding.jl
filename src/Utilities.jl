@@ -13,7 +13,7 @@ function norm_to_between_100_and_1000(val::Number; return_OOM=true)
     while val > 1000
         val/=10; power_of_10 += 1
     end
-    while val ≤ 100
+    while val < 100
         val*=10; power_of_10 += -1
     end
     if return_OOM
