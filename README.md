@@ -113,14 +113,12 @@ In other words, if the input value is larger than the geometric mean, the return
 If the given input is smaller than the geometric mean, the output was rounded down. Rounding in this case means taking the first bigger/smaller value in the E-series.
 
 ## Where do the values come from?
-The values rounded to are found in the [wikipedia list](https://en.wikipedia.org/wiki/E_series_of_preferred_numbers#Lists) of E-series values. While this list ranges from 1 to 10, the values used are multiplied by 100 and converted to integers. The reasoning is that integers exact, in addition to being faster and easier to read than floating point values.
+The values rounded to are found in the [wikipedia list](https://en.wikipedia.org/wiki/E_series_of_preferred_numbers#Lists) of E-series values. While this list ranges from 1 to 10, the values used are multiplied by 100 and converted to integers. The advantages are that integers are exact, in addition to being (opinion) faster and easier to read than floating point values.
   
 ## Feedback
 As this is the first package of a relativly novice programmer, feedback and input on ways the package could be better are very welcome!
 
 ### ToDo
 
-* Add tests:
-    * Round 1:10 and 100:1000, and see that they are in the series rounded to (for all series?)
-    * Round a number of values, add a tiny number, and see that none are in the series rounded to
+* Restructure package; split off into ESeries.jl and AbstractPrefNumbSys.jl
 * Add support for rounding to other standards for electrical components.
