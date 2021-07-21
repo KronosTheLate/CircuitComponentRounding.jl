@@ -120,5 +120,5 @@ As this is the first package of a relativly novice programmer, feedback and inpu
 
 ### ToDo
 
-* Restructure package; split off into ESeries.jl and AbstractPrefNumbSys.jl
+* Restructure package; split off into ESeries.jl and AbstractCircuitComponentRounding.jl
 * Add support for rounding to other standards for electrical components.
