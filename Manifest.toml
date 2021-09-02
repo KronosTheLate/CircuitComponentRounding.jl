@@ -1,5 +1,16 @@
 # This file is machine-generated - editing it directly is not advised
 
+[[AbstractCircuitComponentRounding]]
+git-tree-sha1 = "cb5bf5e4bb5365b6d454ebf8e0c4e02b143326fb"
+uuid = "f69727b9-8a39-40e5-8e7a-0243a3421727"
+version = "0.1.1"
+
+[[ESeriesRounding]]
+deps = ["AbstractCircuitComponentRounding", "NumericIO"]
+git-tree-sha1 = "4a3267d154ba05a1692064beb727c22a440c9ce5"
+uuid = "7b398af1-3c03-4c36-a68d-b29057ec0a45"
+version = "0.1.1"
+
 [[NumericIO]]
 deps = ["Printf"]
 git-tree-sha1 = "5e2bd9bee8b55b754ca61386df207abbfc266ef6"
